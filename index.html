@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>поиск юзернеймов ^ω^</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #111;
+    --paper: #f5f5f5;
+    --soft: #e5e5e5;
+    --line: #ccc;
+    --muted: #888;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Courier New", monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    padding: 20px 16px 32px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .header pre {
+    font-size: 11px;
+    line-height: 1.2;
+    color: var(--ink);
+    user-select: none;
+  }
+  .header .title {
+    font-size: 14px;
+    margin-top: 10px;
+    letter-spacing: 2px;
+  }
+  .header .sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+
+  .card-title {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .length-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .length-row input {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: var(--soft);
+    border-radius: 4px;
+    outline: none;
+  }
+  .length-row input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .length-row input::-moz-range-thumb {
+    width: 16px; height: 16px;
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .length-value {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 32px;
+    text-align: center;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 4px 6px;
+  }
+
+  .type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .type-btn {
+    padding: 12px 6px;
+    text-align: center;
+    font-size: 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s;
+  }
+  .type-btn.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .type-btn:active { transform: translateY(1px); }
+
+  .toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--soft);
+    font-size: 13px;
+  }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-row .hint {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .switch {
+    position: relative;
+    width: 40px; height: 22px;
+    background: var(--soft);
+    border-radius: 22px;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .switch::after {
+    content: "";
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 18px; height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+  .switch.on { background: var(--ink); }
+  .switch.on::after { transform: translateX(18px); }
+
+  .cat-divider {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 18px 0;
+    letter-spacing: 2px;
+    user-select: none;
+  }
+
+  .note {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  .go {
+    width: 100%;
+    padding: 16px;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--line);
+    transition: all 0.15s;
+  }
+  .go:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 var(--line);
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 18px;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <pre>
+   (\_/)
+   ( •ω•)
+   / >  ﾟ
+
+   ʕ⁎̯͡⁎ʔ༄   ^ω^   (˶ᵔ ᵕ ᵔ˶)
+    </pre>
+    <div class="title">поиск юзернеймов</div>
+    <div class="sub">настрой меня под себя ^ω^</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">длина ʕ•ᴥ•ʔ</div>
+    <div class="length-row">
+      <input type="range" id="len" min="5" max="12" value="5" step="1">
+      <div class="length-value" id="lenVal">5</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">что искать ( • ̀ω•́ )✧</div>
+    <div class="type-grid">
+      <div class="type-btn active" data-type="letters">только буквы</div>
+      <div class="type-btn" data-type="mix">буквы + цифры</div>
+    </div>
+    <div class="note">юзернейм всегда начинается с буквы</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ещё чуть-чуть (ฅ'ω'ฅ)</div>
+
+    <div class="toggle-row">
+      <div>
+        без повторов
+        <span class="hint">буквы не повторяются</span>
+      </div>
+      <div class="switch" id="sw-unique"></div>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        красивые буквы
+        <span class="hint">без l, i, o, 0, 1</span>
+      </div>
+      <div class="switch" id="sw-pretty"></div>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        без словарных слов
+        <span class="hint">не показывать обычные слова</span>
+      </div>
+      <div class="switch" id="sw-noWords"></div>
+    </div>
+  </div>
+
+  <div class="cat-divider">
+    ʕ⁎̯͡⁎ʔ༄  ^ω^  (˶ᵔ ᵕ ᵔ˶)
+  </div>
+
+  <button class="go" onclick="save()">сохранить ^ω^</button>
+
+  <div class="footer">(ฅ'ω'ฅ) мяу · мяу · мяу ʕ•ᴥ•ʔ</div>
+
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+  tg.expand();
+
+  const len = document.getElementById('len');
+  const lenVal = document.getElementById('lenVal');
+  len.addEventListener('input', () => lenVal.textContent = len.value);
+
+  let type = "letters";
+  document.querySelectorAll('.type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      type = btn.dataset.type;
+    });
+  });
+
+  const state = {
+    unique: false,
+    pretty: false,
+    noWords: false,
+  };
+  function bindSwitch(id, key) {
+    const el = document.getElementById(id);
+    el.addEventListener('click', () => {
+      state[key] = !state[key];
+      el.classList.toggle('on', state[key]);
+    });
+  }
+  bindSwitch('sw-unique', 'unique');
+  bindSwitch('sw-pretty', 'pretty');
+  bindSwitch('sw-noWords', 'noWords');
+
+  function save() {
+    const data = {
+      length: parseInt(len.value, 10),
+      type: type,
+      unique: state.unique,
+      pretty: state.pretty,
+      noWords: state.noWords,
+    };
+    tg.sendData(JSON.stringify(data));
+    tg.close();
+  }
+</script>
+</body>
+</html>
