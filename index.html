@@ -14,203 +14,94 @@
     --soft: #e5e5e5;
     --line: #ccc;
     --muted: #888;
+    --rose: #ffe4ec;   /* нежно-розовый */
+    --rose-line: #f6c8d8;
   }
 
   html, body {
-    height: 100%;
-    background: var(--paper);
-    color: var(--ink);
+    height: 100%; background: var(--paper); color: var(--ink);
     font-family: "Courier New", monospace;
     -webkit-font-smoothing: antialiased;
   }
+  body { padding: 20px 16px 32px; max-width: 480px; margin: 0 auto; }
 
-  body {
-    padding: 20px 16px 32px;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  .header {
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  .header pre {
-    font-size: 11px;
-    line-height: 1.2;
-    color: var(--ink);
-    user-select: none;
-  }
-  .header .title {
-    font-size: 14px;
-    margin-top: 10px;
-    letter-spacing: 2px;
-  }
-  .header .sub {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 6px;
-    letter-spacing: 1px;
-  }
+  .header { text-align: center; margin-bottom: 24px; }
+  .header pre { font-size: 11px; line-height: 1.2; user-select: none; }
+  .header .title { font-size: 14px; margin-top: 10px; letter-spacing: 2px; }
+  .header .sub { font-size: 11px; color: var(--muted); margin-top: 6px; letter-spacing: 1px; }
 
   .card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 16px;
-    margin-bottom: 14px;
-    box-shadow: 2px 2px 0 var(--line);
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    padding: 16px; margin-bottom: 14px; box-shadow: 2px 2px 0 var(--line);
   }
+  .card.rose { background: var(--rose); border-color: var(--rose-line); }
 
-  .card-title {
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
+  .card-title { font-size: 11px; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 10px; }
 
-  .length-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .length-row { display: flex; align-items: center; gap: 10px; }
   .length-row input {
-    flex: 1;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 4px;
-    background: var(--soft);
-    border-radius: 4px;
-    outline: none;
+    flex: 1; -webkit-appearance: none; appearance: none; height: 4px;
+    background: var(--soft); border-radius: 4px; outline: none;
   }
   .length-row input::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 18px; height: 18px;
-    background: #fff;
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  .length-row input::-moz-range-thumb {
-    width: 16px; height: 16px;
-    background: #fff;
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    cursor: pointer;
+    -webkit-appearance: none; width: 18px; height: 18px;
+    background: #fff; border: 2px solid var(--ink); border-radius: 50%; cursor: pointer;
   }
   .length-value {
-    font-size: 18px;
-    font-weight: bold;
-    min-width: 32px;
-    text-align: center;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 4px 6px;
+    font-size: 18px; font-weight: bold; min-width: 32px; text-align: center;
+    border: 1px solid var(--line); border-radius: 8px; padding: 4px 6px;
   }
 
-  .type-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
+  .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .type-btn {
-    padding: 12px 6px;
-    text-align: center;
-    font-size: 12px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: #fff;
-    cursor: pointer;
-    user-select: none;
-    transition: all 0.15s;
+    padding: 12px 6px; text-align: center; font-size: 12px;
+    border: 1px solid var(--line); border-radius: 10px; background: #fff;
+    cursor: pointer; user-select: none;
   }
-  .type-btn.active {
-    background: var(--ink);
-    color: #fff;
-    border-color: var(--ink);
-  }
-  .type-btn:active { transform: translateY(1px); }
+  .type-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
   .toggle-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px dashed var(--soft);
-    font-size: 13px;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px dashed var(--soft); font-size: 13px;
   }
   .toggle-row:last-child { border-bottom: none; }
-  .toggle-row .hint {
-    display: block;
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
+  .toggle-row .hint { display: block; font-size: 10px; color: var(--muted); margin-top: 2px; }
 
   .switch {
-    position: relative;
-    width: 40px; height: 22px;
-    background: var(--soft);
-    border-radius: 22px;
-    cursor: pointer;
-    transition: background 0.2s;
-    flex-shrink: 0;
+    position: relative; width: 40px; height: 22px; background: var(--soft);
+    border-radius: 22px; cursor: pointer; transition: background 0.2s; flex-shrink: 0;
   }
   .switch::after {
-    content: "";
-    position: absolute;
-    top: 2px; left: 2px;
-    width: 18px; height: 18px;
-    background: #fff;
-    border-radius: 50%;
-    transition: transform 0.2s;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    content: ""; position: absolute; top: 2px; left: 2px;
+    width: 18px; height: 18px; background: #fff; border-radius: 50%;
+    transition: transform 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.2);
   }
   .switch.on { background: var(--ink); }
   .switch.on::after { transform: translateX(18px); }
 
-  .cat-divider {
-    text-align: center;
-    font-size: 13px;
-    color: var(--muted);
-    margin: 18px 0;
-    letter-spacing: 2px;
-    user-select: none;
+  .input-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+  }
+  .input-row label { font-size: 11px; color: var(--muted); flex: 0 0 100px; }
+  .input-row input, .input-row select {
+    flex: 1; padding: 8px; border: 1px solid var(--line); border-radius: 8px;
+    background: #fff; font-family: inherit; font-size: 13px; outline: none;
   }
 
-  .note {
-    font-size: 10px;
-    color: var(--muted);
-    text-align: center;
-    margin-top: 8px;
-    letter-spacing: 1px;
+  .cat-divider {
+    text-align: center; font-size: 13px; color: var(--muted);
+    margin: 18px 0; letter-spacing: 2px; user-select: none;
   }
+  .note { font-size: 10px; color: var(--muted); text-align: center; margin-top: 8px; }
 
   .go {
-    width: 100%;
-    padding: 16px;
-    background: var(--ink);
-    color: #fff;
-    border: none;
-    border-radius: 14px;
-    font-family: inherit;
-    font-size: 14px;
-    letter-spacing: 3px;
-    cursor: pointer;
-    box-shadow: 3px 3px 0 var(--line);
-    transition: all 0.15s;
+    width: 100%; padding: 16px; background: var(--ink); color: #fff;
+    border: none; border-radius: 14px; font-family: inherit; font-size: 14px;
+    letter-spacing: 3px; cursor: pointer; box-shadow: 3px 3px 0 var(--line);
   }
-  .go:active {
-    transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0 var(--line);
-  }
+  .go:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--line); }
 
-  .footer {
-    text-align: center;
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 18px;
-    letter-spacing: 2px;
-  }
+  .footer { text-align: center; font-size: 12px; color: var(--muted); margin-top: 18px; letter-spacing: 2px; }
 </style>
 </head>
 <body>
@@ -227,6 +118,7 @@
     <div class="sub">настрой меня под себя ^ω^</div>
   </div>
 
+  <!-- длина -->
   <div class="card">
     <div class="card-title">длина ʕ•ᴥ•ʔ</div>
     <div class="length-row">
@@ -235,6 +127,7 @@
     </div>
   </div>
 
+  <!-- тип -->
   <div class="card">
     <div class="card-title">что искать ( • ̀ω•́ )✧</div>
     <div class="type-grid">
@@ -244,32 +137,74 @@
     <div class="note">юзернейм всегда начинается с буквы</div>
   </div>
 
+  <!-- БУКВЫ В НАЧАЛЕ -->
+  <div class="card">
+    <div class="card-title">какие буквы в начале (ฅ'ω'ฅ)</div>
+    <div class="input-row">
+      <label>начать с:</label>
+      <input type="text" id="startLetters" placeholder="например: abc или любые" maxlength="26">
+    </div>
+    <div class="note">если пусто — любая буква</div>
+  </div>
+
+  <!-- ЦИФРЫ -->
+  <div class="card">
+    <div class="card-title">цифры в теге ʕ⁎̯͡⁎ʔ༄</div>
+
+    <div class="input-row">
+      <label>сколько:</label>
+      <select id="digitsCount">
+        <option value="0">0 — без цифр</option>
+        <option value="1">1 цифра</option>
+        <option value="2" selected>2 цифры</option>
+        <option value="3">3 цифры</option>
+      </select>
+    </div>
+
+    <div class="input-row">
+      <label>какие:</label>
+      <input type="text" id="digitsAllowed" placeholder="например: 0123 или 7 (только семёрки)" maxlength="10">
+    </div>
+
+    <div class="input-row">
+      <label>где стоят:</label>
+      <select id="digitsPosition">
+        <option value="end" selected>в конце</option>
+        <option value="start">в начале</option>
+        <option value="middle">в середине</option>
+        <option value="any">в любом месте</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ТУМБЛЕРЫ -->
   <div class="card">
     <div class="card-title">ещё чуть-чуть (ฅ'ω'ฅ)</div>
 
     <div class="toggle-row">
-      <div>
-        без повторов
-        <span class="hint">буквы не повторяются</span>
-      </div>
+      <div>без повторов<span class="hint">буквы не повторяются</span></div>
       <div class="switch" id="sw-unique"></div>
     </div>
 
     <div class="toggle-row">
-      <div>
-        красивые буквы
-        <span class="hint">без l, i, o, 0, 1</span>
-      </div>
+      <div>красивые буквы<span class="hint">без l, i, o, 0, 1</span></div>
       <div class="switch" id="sw-pretty"></div>
     </div>
 
     <div class="toggle-row">
-      <div>
-        без словарных слов
-        <span class="hint">не показывать обычные слова</span>
-      </div>
+      <div>без словарных слов<span class="hint">не показывать обычные слова</span></div>
       <div class="switch" id="sw-noWords"></div>
     </div>
+  </div>
+
+  <!-- похожее слово -->
+  <div class="card rose">
+    <div class="card-title">похожее на слово ^ω^</div>
+    <div class="input-row">
+      <label>слово:</label>
+      <input type="text" id="similar" placeholder="например: woodland">
+    </div>
+    <div class="note">бот придумает вариации этого слова</div>
   </div>
 
   <div class="cat-divider">
@@ -285,10 +220,12 @@
   tg.ready();
   tg.expand();
 
+  // длина
   const len = document.getElementById('len');
   const lenVal = document.getElementById('lenVal');
   len.addEventListener('input', () => lenVal.textContent = len.value);
 
+  // тип
   let type = "letters";
   document.querySelectorAll('.type-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -298,11 +235,8 @@
     });
   });
 
-  const state = {
-    unique: false,
-    pretty: false,
-    noWords: false,
-  };
+  // тумблеры
+  const state = { unique: false, pretty: false, noWords: false };
   function bindSwitch(id, key) {
     const el = document.getElementById(id);
     el.addEventListener('click', () => {
@@ -321,6 +255,11 @@
       unique: state.unique,
       pretty: state.pretty,
       noWords: state.noWords,
+      startLetters: document.getElementById('startLetters').value.trim().toLowerCase(),
+      digitsCount: parseInt(document.getElementById('digitsCount').value, 10),
+      digitsAllowed: document.getElementById('digitsAllowed').value.trim(),
+      digitsPosition: document.getElementById('digitsPosition').value,
+      similar: document.getElementById('similar').value.trim().toLowerCase(),
     };
     tg.sendData(JSON.stringify(data));
     tg.close();
